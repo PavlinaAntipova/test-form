@@ -1,32 +1,43 @@
 import { useState, useEffect } from 'react';
+import { AiOutlineCheck } from 'react-icons/ai';
+import { BiUpArrow, BiDownArrow } from 'react-icons/bi';
 import MonthPickerField from 'components/MonthPickerField';
 
 import { getNameMonthFormat, getNameOfSimpleInput, getSymbol, isDate, isString } from "helper/functions";
 
 
+import s from './SummarySelect.module.css';
+
 const SummarySelect = ({ field, form, isOpenSelect, setIsOpenSelect }) => {
+    const {name} = field;
+    const {errors, values, setFieldValue, status, setStatus} = form;
     const [selectedItem, setSelectedItem] = useState(null);
-    const [offset, setOffset] = useState(0);
+    const [offset, setOffset] = useState(null);
     const options = getNameOfSimpleInput(form.values);
 
     useEffect(() => {
-        if (form.errors?.emptyDate) {
+        if (errors?.emptyDate) {
             setIsOpenSelect(true);
         }
-        if(isDate(form.values[field.name])) {
+    }, []);
+
+
+    useEffect(() => {
+        if (offset === null) return;
+        if(isDate(values[name])) {
             setOffset(0);
         }
-        if (offset === 0) return;
         const symbol = getSymbol(offset); 
-        form.setFieldValue(field.name, `${selectedItem} ${symbol} ${offset !== 0 ? `${ offset } mo.` : ''}`);
+        setFieldValue(name, `${selectedItem} ${symbol} ${offset !== 0 ? `${offset} mo.` : ``}`);
     }, [offset]);
 
 
     const onClick = e => {
-        const name = e.target.name;
-        setSelectedItem(name);
+        const targetName = e.target.name;
+        setStatus(null);
+        setSelectedItem(targetName);
         setOffset(0);
-        form.setFieldValue(field.name, name);
+        setFieldValue(name, targetName);
     }
 
     const onChange = e => {
@@ -44,45 +55,63 @@ const SummarySelect = ({ field, form, isOpenSelect, setIsOpenSelect }) => {
     }
 
     const increaseBtn = () => {
-        setOffset(prev => prev += 1);
+        setOffset(prev => {
+            if (prev === null) {
+                return 0 + 1;
+            }
+            return prev += 1;
+        });
     }
 
     const decreaseBtn = () => {
-       setOffset(prev => prev -= 1); 
+        setOffset(prev => {
+            if (prev === null) {
+                return 0 - 1;
+            }
+            return prev -= 1;
+        }); 
     }
 
     const toggleSelect = e => {
         setIsOpenSelect(prev => !prev);
     }
+
    
     return <div>
-    <div>
-        <label onClick={toggleSelect}>{form.values[field.name] ? isString(form.values[field.name]) ? form.values[field.name] : getNameMonthFormat(form.values[field.name]) : 'Date'}</label>
-        {isOpenSelect && <div>
+        <div className={s.select}>
+            <label className='label' onClick={() => setIsOpenSelect(true)}>{name}</label>
+
+            <button type='button' className={s.totalBtn} data-name='totalBtn' onClick={toggleSelect}>{form.values[field.name] ? isString(values[name]) ? values[name] : getNameMonthFormat(values[name]) : 'Date'}{isOpenSelect ? <BiUpArrow /> : <BiDownArrow />}</button>
+
+        {isOpenSelect && <div className={s.menu} data-name='menu'>
             <div onClick={onClick}>
             <p>Linked to</p>
-            {options.map(item => {
-                const itemValue = form.values[item];
+                {options.map(item => {
+                const itemValue = values[item];
+                const isSelected = item === selectedItem;
 
-                return <button name={item} type='button' key={item} disabled={itemValue ? false : true}>{itemValue ? `${item}: ${getNameMonthFormat(itemValue)}` : `${item}: no data`}</button>
+                return <button className={s.simpleOption} name={item} type='button' key={item} disabled={itemValue ? false : true}>{itemValue ? <>{`${item}: ${getNameMonthFormat(itemValue)}`}</> : `${item}: no data`}<AiOutlineCheck className={(isSelected && status !== "submitted") ? `${s.icon} ${s['icon--shown']}`: `${s.icon}`}/></button>
             })}
         </div>
-        {isString(form.values[field.name]) && <div>
-            <p>Month(s) offset</p>
-            <div onClick={onCounterBtn}>
+        {(isString(values[name]) && status !== "submitted") && <div className={s.offset}>
+                    <p>Month(s) offset</p>
+                    <div className={s.offsetBox}>
+                <div onClick={onCounterBtn} className={s.counter}>
                 <button data-name='increase' type='button'>+</button>
                 <button data-name='decrease' type='button'>-</button>
             </div>
-            <input type="number" value={offset === 0 ? "" : offset} onChange={onChange} />
+            <input className={s.input} type="number" value={offset === null ? "" : offset == 0 ? "" : offset} onChange={onChange} />
+                    </div>
+                    
         </div>
         }
         <div>
             <p>Other date</p>
-                    <MonthPickerField onChange={form.setFieldValue} name={field.name} value={form.values[field.name]} />
-                    <p>{form.errors?.emptyDate && form.errors?.emptyDate}</p>
-        </div>
+                    <MonthPickerField onChange={setFieldValue} setSelectedItem={setSelectedItem} name={name} value={values[name]} className={errors?.emptyDate ? `${s.input} ${s['input--error']}` : `${s.input}`} placeholder="Choose date"/>
+                    <p className={s.errorText}>{errors?.emptyDate && errors?.emptyDate}</p>
+                </div>
+                <button className={s.closeBtn} type='button' onClick={() =>  setIsOpenSelect(false)}>Done</button>
         </div>}
-        
         </div>
         </div>
 

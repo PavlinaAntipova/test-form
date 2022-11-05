@@ -1,0 +1,23 @@
+
+.list {
+    width: 40%;
+    margin: 0 auto;
+    list-style: none;
+    background-color: #fff;
+    border-radius: 40px;
+}
+
+.title {
+    text-align: center;
+}
+
+.item {
+    padding: 20px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.name {
+display: inline-block;
+margin-right: 30px;
+color: #767676;
+}

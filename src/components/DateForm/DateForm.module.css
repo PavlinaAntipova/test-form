@@ -1,0 +1,48 @@
+.form {
+    padding: 20px;
+    width: 40%;
+    height: 500px;
+    margin: 0 auto;
+    border-radius: 40px;
+    box-shadow: 0px 100px 100px rgba(0, 0, 0, 0.1);
+}
+
+
+.inputBox {
+    border-bottom: 1px solid #DCDCDC;
+    padding: 15px;
+}
+
+.inputBox:nth-of-type(1) input {
+    background-color: #FEE4CB;
+}
+
+.inputBox:nth-of-type(2n) input {
+    background-color: #E9E7FD;
+}
+
+.inputBox:nth-of-type(3n) input {
+    background-color: #FFD3E2;
+}
+
+.submitBtn {
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-size: 16px;
+    background-color: rgb(220, 220, 220);
+}
+
+.submitBtn:hover,
+.submitBtn:focus {
+     background-color: #C8F7DC;
+ }
+
+ .input {
+     width: 70px;
+ }
+
+
+ .input::placeholder {
+     font-weight: 400;
+     font-size: 10px;
+ }

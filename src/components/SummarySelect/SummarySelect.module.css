@@ -1,0 +1,89 @@
+.select {
+    position: relative;
+    margin-bottom: 40px;
+    padding: 15px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.menu {
+    position: absolute;
+    top: 101%;
+    padding: 15px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 100px 100px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 250px;
+}
+
+.totalBtn {
+    width: 120px;
+    background-color: #DBF6FD;
+    text-align: left;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.simpleOption {
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+  .icon {
+    pointer-events: none;
+    margin-left: auto;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon--shown {
+    opacity: 1;
+  }
+
+.input {
+    width: 100%;
+    background-color: #DCDCDC;
+    border: 1px solid #DCDCDC;
+}
+
+
+ .input--error {
+  border: 1px solid red;
+ }
+
+ .offsetBox {
+display: flex;
+align-items: center;
+ }
+
+ .counter {
+margin-right: 10px;
+text-align: center;
+ }
+
+ .counter button {
+    padding: 0;
+  border-radius: 0;
+  width: 30px;
+ }
+
+
+.counter button:first-child {
+border-bottom: 1px solid #DCDCDC;
+   }
+
+   .errorText {
+    color: red;
+    font-weight: 700;
+   }
+
+   .closeBtn {
+      background-color: #DBF6FD;
+      text-transform: uppercase;
+   }
+
+
+
