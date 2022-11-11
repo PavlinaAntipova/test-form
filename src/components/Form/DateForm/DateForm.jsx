@@ -1,8 +1,8 @@
 import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
 
-import MonthPickerField from 'components/MonthPickerField';
-import SummaryField from 'components/SummaryField';
+import MonthPickerField from 'components/Form/DateForm/MonthPickerField';
+import SummaryField from 'components/Form/DateForm/SummaryField';
 
 import s from './DateForm.module.css';
 
@@ -59,7 +59,7 @@ const DateForm = ({setResult}) => {
                     <MonthPickerField name={name} value={values[name]} onChange={setFieldValue} placeholder={name} onFocus={setIsOpenSelect} className={s.input}/>
                 </div>)}
                 <SummaryField name='TZP' isOpenSelect={isOpenSelect} setIsOpenSelect={setIsOpenSelect} />
-                <button className={s.submitBtn} type="submit">Send</button>
+                <button className={`${s.submitBtn} button`} type="submit">Send</button>
             </Form>);
         }}
     </Formik>);

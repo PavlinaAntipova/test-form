@@ -1,19 +1,34 @@
-import { useState } from "react";
+import theme from "helper/theme";
+import { NavLink, Outlet } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { Container, Navigation, Title } from "./App.styled";
 
-import DateForm from "components/DateForm";
-import Result from "components/Result";
-
-import s from './App.module.css';
 
 const App = () => {
-  const [result, setResult] = useState(null);
-
   return (
-    <div className={s.container}>
-      <DateForm setResult={setResult} />
-      {result && <Result resultData={result} />}
-    </div>
+    <ThemeProvider theme={theme}>
+    <Container>
+        <header>
+            <Title>Dima's Tasks</Title>
+            <nav>
+                <Navigation>
+                    <li><NavLink to='/date-form' style={({ isActive }) =>
+              isActive ? theme.activeLink : undefined
+            }>Date Form Task</NavLink></li>
+                     <li><NavLink to='/multiselect' style={({ isActive }) =>
+              isActive ? theme.activeLink : undefined
+            }>Multiselector Task</NavLink></li>
+                </Navigation>
+            </nav>
+      </header>
+        
+        <div>
+            <Outlet />
+        </div>
+      </Container>
+      </ThemeProvider>
   );
 }
 
 export default App;
+

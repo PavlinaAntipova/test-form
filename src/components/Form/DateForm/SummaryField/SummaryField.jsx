@@ -1,6 +1,6 @@
 import { Field, useFormikContext } from "formik";
 
-import SummarySelect from "components/SummarySelect";
+import SummarySelect from "components/Form/DateForm/SummarySelect";
 
 
 const SummaryField = ({name, isOpenSelect, setIsOpenSelect}) => {

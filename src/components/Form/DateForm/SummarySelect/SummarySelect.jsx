@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { BiUpArrow, BiDownArrow } from 'react-icons/bi';
-import MonthPickerField from 'components/MonthPickerField';
+import MonthPickerField from 'components/Form/DateForm/MonthPickerField';
 
 import { getNameMonthFormat, getNameOfSimpleInput, getSymbol, isDate, isString } from "helper/functions";
 
@@ -81,7 +81,7 @@ const SummarySelect = ({ field, form, isOpenSelect, setIsOpenSelect }) => {
         <div className={s.select}>
             <label className='label' onClick={() => setIsOpenSelect(true)}>{name}</label>
 
-            <button type='button' className={s.totalBtn} data-name='totalBtn' onClick={toggleSelect}>{form.values[field.name] ? isString(values[name]) ? values[name] : getNameMonthFormat(values[name]) : 'Date'}{isOpenSelect ? <BiUpArrow /> : <BiDownArrow />}</button>
+            <button type='button' className={`${s.totalBtn} button`} data-name='totalBtn' onClick={toggleSelect}>{form.values[field.name] ? isString(values[name]) ? values[name] : getNameMonthFormat(values[name]) : 'Date'}{isOpenSelect ? <BiUpArrow /> : <BiDownArrow />}</button>
 
         {isOpenSelect && <div className={s.menu} data-name='menu'>
             <div onClick={onClick}>
@@ -90,15 +90,15 @@ const SummarySelect = ({ field, form, isOpenSelect, setIsOpenSelect }) => {
                 const itemValue = values[item];
                 const isSelected = item === selectedItem;
 
-                return <button className={s.simpleOption} name={item} type='button' key={item} disabled={itemValue ? false : true}>{itemValue ? <>{`${item}: ${getNameMonthFormat(itemValue)}`}</> : `${item}: no data`}<AiOutlineCheck className={(isSelected && status !== "submitted") ? `${s.icon} ${s['icon--shown']}`: `${s.icon}`}/></button>
+                return <button className={`${s.simpleOption} button`} name={item} type='button' key={item} disabled={itemValue ? false : true}>{itemValue ? <>{`${item}: ${getNameMonthFormat(itemValue)}`}</> : `${item}: no data`}<AiOutlineCheck className={(isSelected && status !== "submitted") ? `${s.icon} ${s['icon--shown']}`: `${s.icon}`}/></button>
             })}
         </div>
         {(isString(values[name]) && status !== "submitted") && <div className={s.offset}>
                     <p>Month(s) offset</p>
                     <div className={s.offsetBox}>
                 <div onClick={onCounterBtn} className={s.counter}>
-                <button data-name='increase' type='button'>+</button>
-                <button data-name='decrease' type='button'>-</button>
+                <button className='button' data-name='increase' type='button'>+</button>
+                <button className='button' data-name='decrease' type='button'>-</button>
             </div>
             <input className={s.input} type="number" value={offset === null ? "" : offset == 0 ? "" : offset} onChange={onChange} />
                     </div>
@@ -110,7 +110,7 @@ const SummarySelect = ({ field, form, isOpenSelect, setIsOpenSelect }) => {
                     <MonthPickerField onChange={setFieldValue} setSelectedItem={setSelectedItem} name={name} value={values[name]} className={errors?.emptyDate ? `${s.input} ${s['input--error']}` : `${s.input}`} placeholder="Choose date"/>
                     <p className={s.errorText}>{errors?.emptyDate && errors?.emptyDate}</p>
                 </div>
-                <button className={s.closeBtn} type='button' onClick={() =>  setIsOpenSelect(false)}>Done</button>
+                <button className={`${s.closeBtn} button`} type='button' onClick={() =>  setIsOpenSelect(false)}>Done</button>
         </div>}
         </div>
         </div>
